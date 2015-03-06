@@ -8,3 +8,6 @@ compile:
 
 run:
 	java -cp ${jarfile} -Dlog4j.configuration=file:${log4jproperties} com.delta.rdfdrools.RDFDrools
+
+clean:
+	mvn clean
