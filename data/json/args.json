@@ -1,0 +1,9 @@
+{
+  "args":[
+      {"property":"hasTag1Temp", "propertyNS":"accontrol", "value":"29", "valueNS":"xsd:float"},
+      {"property":"hasTag2Temp", "propertyNS":"accontrol", "value":"29", "valueNS":"xsd:float"},
+      {"property":"hasTag3Temp", "propertyNS":"accontrol", "value":"29", "valueNS":"xsd:float"},
+      {"property":"hasIPCSTemp", "propertyNS":"accontrol", "value":"29", "valueNS":"xsd:float"}
+      {"property":"hasCompressorWork", "propertyNS":"accontrol", "value":"true", "valueNS":"xsd:boolean"}
+    ]
+}
