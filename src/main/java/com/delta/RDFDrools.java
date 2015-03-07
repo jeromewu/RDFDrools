@@ -42,6 +42,8 @@ public class RDFDrools
     KieServices ks = KieServices.Factory.get();
     KieContainer kc = ks.getKieClasspathContainer();
     KieSession ksession = kc.newKieSession("RDFDroolsKS");
+    //ksession.addEventListener( new DebugAgendaEventListener() );
+    //ksession.addEventListener( new DebugRuleRuntimeEventListener() );
     //ksession.setGlobal("list", new ArrayList<Object>());
 
     ksession.insert(context);

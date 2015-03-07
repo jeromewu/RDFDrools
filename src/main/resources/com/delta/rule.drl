@@ -4,7 +4,7 @@ import com.delta.Context;
 
 rule Tag1 
   when
-    $ctx : Context($ctx.getLiteralFloat("hasTag1Temp") > 22)
+    $ctx : Context(getLiteralFloat("accontrol:hasTag1Temp") > 22)
   then
-    System.out.println("Tag1 temp: " + $ctx.getLiteralFloat("hasTag1Temp"));
+    System.out.println("Tag1 Temp: " + $ctx.getLiteralFloat("accontrol:hasTag1Temp"));
   end

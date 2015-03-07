@@ -22,15 +22,17 @@ public class Context {
     this.abbrMap = abbrMap;
   }
 
-  public float getLiteralFloat(String propertyNameSpace, String propertyLocalName) {
-    return getLiteral(propertyNameSpace, propertyLocalName).getFloat();
+  public float getLiteralFloat(String propertyString) {
+    return getLiteral(propertyString).getFloat();
   }
 
-  public boolean getLiteralBoolean(String propertyNameSpace, String propertyLocalName) {
-    return getLiteral(propertyNameSpace, propertyLocalName).getBoolean();
+  public boolean getLiteralBoolean(String propertyString) {
+    return getLiteral(propertyString).getBoolean();
   }
 
-  private Literal getLiteral(String propertyNameSpace, String propertyLocalName) {
+  private Literal getLiteral(String propertyString) {
+    String propertyNameSpace = propertyString.split(":")[0];
+    String propertyLocalName = propertyString.split(":")[1];
     Property property = model.getProperty(abbrMap.get(propertyNameSpace), propertyLocalName);
     Statement statement = target.getProperty(property);
     Literal literal = statement.getObject().asLiteral();
