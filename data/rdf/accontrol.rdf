@@ -17,7 +17,25 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <owl:Ontology rdf:about="http://www.delta.com.tw/accontrol">
         <owl:versionIRI rdf:resource="http://www.delta.com.tw/accontrol/1.0.0"/>
+        <owl:imports rdf:resource="http://www.delta.com.tw/airconditioning/1.0.0"/>
     </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.delta.com.tw/accontrol#hasMode -->
+
+    <owl:ObjectProperty rdf:about="http://www.delta.com.tw/accontrol#hasMode"/>
     
 
 
@@ -41,6 +59,18 @@
     <!-- http://www.delta.com.tw/accontrol#hasIPCSTemp -->
 
     <owl:DatatypeProperty rdf:about="http://www.delta.com.tw/accontrol#hasIPCSTemp"/>
+    
+
+
+    <!-- http://www.delta.com.tw/accontrol#hasPeople -->
+
+    <owl:DatatypeProperty rdf:about="http://www.delta.com.tw/accontrol#hasPeople"/>
+    
+
+
+    <!-- http://www.delta.com.tw/accontrol#hasSetTemp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.delta.com.tw/accontrol#hasSetTemp"/>
     
 
 

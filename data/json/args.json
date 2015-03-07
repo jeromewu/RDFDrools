@@ -1,9 +1,12 @@
 {
   "args":[
+      {"property":"hasSetTemp", "propertyNS":"accontrol", "value":"22", "valueNS":"xsd:float"},
       {"property":"hasTag1Temp", "propertyNS":"accontrol", "value":"29", "valueNS":"xsd:float"},
       {"property":"hasTag2Temp", "propertyNS":"accontrol", "value":"29", "valueNS":"xsd:float"},
       {"property":"hasTag3Temp", "propertyNS":"accontrol", "value":"29", "valueNS":"xsd:float"},
-      {"property":"hasIPCSTemp", "propertyNS":"accontrol", "value":"29", "valueNS":"xsd:float"}
-      {"property":"hasCompressorWork", "propertyNS":"accontrol", "value":"true", "valueNS":"xsd:boolean"}
+      {"property":"hasIPCSTemp", "propertyNS":"accontrol", "value":"20", "valueNS":"xsd:float"}
+      {"property":"hasCompressorWork", "propertyNS":"accontrol", "value":"false", "valueNS":"xsd:boolean"}
+      {"property":"hasPeople", "propertyNS":"accontrol", "value":"true", "valueNS":"xsd:boolean"}
+      {"property":"hasMode", "propertyNS":"accontrol", "value":"Mode2", "valueNS":"airconditioning"}
     ]
 }

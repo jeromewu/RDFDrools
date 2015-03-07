@@ -51,6 +51,7 @@ public class OntUtility {
           String abbr = seg[1].substring(0, seg[1].length()-1);
           String uri = CommonUtility.extractString(seg[2], ".*\\< *(.*) *\\>*.");
           abbrMap.put(abbr, uri);
+          abbrMap.put(uri, abbr);
         }
       }
       registerAbbr(abbrMap);
@@ -59,7 +60,9 @@ public class OntUtility {
     
     public static void registerAbbr(Map<String, String> abbrMap) {
       for(String key : abbrMap.keySet()) {
-        PrintUtil.registerPrefix(key, abbrMap.get(key));
+        if(key.indexOf("#") == -1) {
+          PrintUtil.registerPrefix(key, abbrMap.get(key));
+        }
       }
     }
 

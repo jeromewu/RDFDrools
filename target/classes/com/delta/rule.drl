@@ -1,0 +1,101 @@
+package com.delta
+
+import com.delta.Context;
+import com.google.common.math.DoubleMath;
+import java.lang.Float;
+import java.lang.Boolean;
+import java.lang.String;
+import java.lang.Math;
+
+global java.util.Map gVar;
+
+rule "Init"
+  salience 2
+  when
+    Context($mode : getResourceURI("accontrol:hasMode"))
+    Context($setTemp : getLiteralFloat("accontrol:hasSetTemp"))
+    Context($tag1Temp : getLiteralFloat("accontrol:hasTag1Temp"))
+    Context($tag2Temp : getLiteralFloat("accontrol:hasTag2Temp"))
+    Context($tag3Temp : getLiteralFloat("accontrol:hasTag3Temp"))
+    Context($ipcsTemp : getLiteralFloat("accontrol:hasIPCSTemp"))
+    Context($isCompressorWork : getLiteralBoolean("accontrol:hasCompressorWork"))
+    Context($isPeople : getLiteralBoolean("accontrol:hasPeople"))
+  then
+    gVar.clear();
+    gVar.put("mode", new String($mode));
+    gVar.put("setTemp", new Float($setTemp));
+    gVar.put("tag1Temp", new Float($tag1Temp));
+    gVar.put("tag2Temp", new Float($tag2Temp));
+    gVar.put("tag3Temp", new Float($tag3Temp));
+    gVar.put("ipcsTemp", new Float($ipcsTemp));
+    gVar.put("isCompressorWork", new Boolean($isCompressorWork));
+    gVar.put("isPeople", new Boolean($isPeople));
+    gVar.put("avgTemp", new Float(DoubleMath.mean($tag1Temp, $tag2Temp, $tag3Temp, $ipcsTemp)));
+    gVar.put("maxTagTemp", new Float(Math.max(Math.max($tag1Temp, $tag2Temp), $tag3Temp)));
+  end
+    
+rule "Print Context Info"
+  salience 1
+  when
+    $ctx : Context()
+  then
+    System.out.println(gVar);
+  end
+
+// Rule Start
+
+rule "Idle to Mode1"
+  when
+    $ctx : Context()
+    eval(((String)gVar.get("mode")).equals("airconditioning:Idle"))
+    eval((Boolean)gVar.get("isPeople") == true)
+  then
+    System.out.println("From Idle to Mode1");
+  end
+
+rule "Mode1 to Mode2"
+  when
+    $ctx : Context()
+    eval(((String)gVar.get("mode")).equals("airconditioning:Mode1"))
+    eval((Float)gVar.get("avgTemp") > (Float)gVar.get("setTemp") )
+  then
+    System.out.println("From Mode1 to Mode2");
+  end
+
+rule "not setTemp-2 > avgTemp"
+  when 
+    $ctx : Context()
+    eval(!((Float)gVar.get("setTemp")-2 > (Float)gVar.get("avgTemp")))
+  then
+  end
+
+rule "not maxTagTemp > ipcsTemp" extends "not setTemp-2 > avgTemp"
+  when
+    eval(!((Float)gVar.get("maxTagTemp") > (Float)gVar.get("ipcsTemp")))
+  then
+  end
+
+rule "Mode2 to Mode1"
+  when
+    $ctx : Context()
+    eval(((String)gVar.get("mode")).equals("airconditioning:Mode2"))
+    eval((Float)gVar.get("setTemp")-2 > (Float)gVar.get("avgTemp"))
+  then
+    System.out.println("From Mode2 to Mode1");
+  end
+
+rule "Mode2 to Mode3" extends "not setTemp-2 > avgTemp"
+  when
+    eval(((String)gVar.get("mode")).equals("airconditioning:Mode2"))
+    eval((Float)gVar.get("maxTagTemp") > (Float)gVar.get("ipcsTemp"))
+  then
+    System.out.println("From Mode2 to Mode3");
+  end
+
+rule "Mode2 to Mode4" extends "not maxTagTemp > ipcsTemp"
+  when
+    eval(((String)gVar.get("mode")).equals("airconditioning:Mode2"))
+    eval((Boolean)gVar.get("isCompressorWork") == false)
+  then
+    System.out.println("From Mode2 to Mode4");
+  end

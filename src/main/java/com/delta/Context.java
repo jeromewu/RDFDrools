@@ -7,6 +7,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class Context {
   private Model model;
@@ -22,20 +23,31 @@ public class Context {
     this.abbrMap = abbrMap;
   }
 
-  public float getLiteralFloat(String propertyString) {
-    return getLiteral(propertyString).getFloat();
+  public float getLiteralFloat(String propertyURI) {
+    return getLiteral(propertyURI).getFloat();
   }
 
-  public boolean getLiteralBoolean(String propertyString) {
-    return getLiteral(propertyString).getBoolean();
+  public boolean getLiteralBoolean(String propertyURI) {
+    return getLiteral(propertyURI).getBoolean();
   }
 
-  private Literal getLiteral(String propertyString) {
-    String propertyNameSpace = propertyString.split(":")[0];
-    String propertyLocalName = propertyString.split(":")[1];
+  public String getResourceURI(String propertyURI) {
+    Resource resource = getStatementObject(propertyURI).asResource();
+    String resourceNameSpace = abbrMap.get(resource.getNameSpace());
+    String resourceLocalName = resource.getLocalName();
+    return resourceNameSpace + ":" + resourceLocalName;
+  }
+
+  private Literal getLiteral(String propertyURI) {
+    Literal literal = getStatementObject(propertyURI).asLiteral();
+    return literal;
+  }
+
+  private RDFNode getStatementObject(String propertyURI) {
+    String propertyNameSpace = propertyURI.split(":")[0];
+    String propertyLocalName = propertyURI.split(":")[1];
     Property property = model.getProperty(abbrMap.get(propertyNameSpace), propertyLocalName);
     Statement statement = target.getProperty(property);
-    Literal literal = statement.getObject().asLiteral();
-    return literal;
+    return statement.getObject();
   }
 }
